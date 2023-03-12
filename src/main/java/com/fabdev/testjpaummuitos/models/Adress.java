@@ -12,6 +12,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.fabdev.testjpaummuitos.enums.TypeAdress;
+
 @Entity
 @Table(name = "tb_adress")
 public class Adress implements Serializable {
@@ -28,6 +30,8 @@ public class Adress implements Serializable {
 	
 	private String city;
 	
+	private Integer typeAdress;
+	
 	@ManyToOne
 	@JoinColumn(name = "id_customer")
 	private Customer customer;
@@ -35,11 +39,12 @@ public class Adress implements Serializable {
 	public Adress() {
 	}
 
-	public Adress(UUID id, String public_place, String neighborhood, String city, Customer customer) {
+	public Adress(UUID id, String public_place, String neighborhood, String city, TypeAdress typeAdress, Customer customer) {
 		this.id = id;
 		this.public_place = public_place;
 		this.neighborhood = neighborhood;
 		this.city = city;
+		setTypeAdress(typeAdress);
 		this.customer = customer;
 	}
 
@@ -73,6 +78,16 @@ public class Adress implements Serializable {
 
 	public void setCity(String city) {
 		this.city = city;
+	}
+	
+	public TypeAdress getTypeAdress() {
+		return TypeAdress.valueOf(typeAdress);
+	}
+	
+	public void setTypeAdress(TypeAdress typeAdress) {
+		if(typeAdress != null) {
+			this.typeAdress = typeAdress.getCode();
+		}		
 	}
 
 	public Customer getCustomer() {
