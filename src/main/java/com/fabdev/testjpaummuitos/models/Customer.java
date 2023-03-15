@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -20,14 +21,13 @@ public class Customer implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "id_customer")
 	private UUID id;
 	
 	private String name;
 	
 	private String email;
 	
-	@OneToMany(mappedBy = "customer")
+	@OneToMany(mappedBy = "customer", cascade=CascadeType.ALL)
 	private List<Adress> adresses = new ArrayList<>();
 	
 	public Customer() {

@@ -33,7 +33,7 @@ public class Adress implements Serializable {
 	private Integer typeAdress;
 	
 	@ManyToOne
-	@JoinColumn(name = "id_customer")
+	@JoinColumn(name = "customer_id")
 	private Customer customer;
 	
 	public Adress() {
