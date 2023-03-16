@@ -3,14 +3,15 @@ package com.fabdev.testjpaummuitos.models;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 
 import javax.persistence.CascadeType;
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -27,14 +28,13 @@ public class Customer implements Serializable {
 	
 	private String email;
 	
-	@OneToMany(mappedBy = "customer", cascade=CascadeType.ALL)
+	@OneToMany(mappedBy = "customerId", cascade=CascadeType.ALL)
 	private List<Adress> adresses = new ArrayList<>();
 	
 	public Customer() {
 	}
 
-	public Customer(UUID id, String name, String email) {
-		this.id = id;
+	public Customer(String name, String email) {
 		this.name = name;
 		this.email = email;
 	}
@@ -66,4 +66,28 @@ public class Customer implements Serializable {
 	public List<Adress> getAdresses() {
 		return adresses;
 	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(id);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Customer other = (Customer) obj;
+		return Objects.equals(id, other.id);
+	}
+
+	@Override
+	public String toString() {
+		return "Customer [id=" + id + ", name=" + name + ", email=" + email + ", adresses=" + adresses + "]";
+	}
+	
+	
 }

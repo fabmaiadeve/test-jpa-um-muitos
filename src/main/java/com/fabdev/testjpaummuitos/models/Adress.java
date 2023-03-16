@@ -1,6 +1,7 @@
 package com.fabdev.testjpaummuitos.models;
 
 import java.io.Serializable;
+import java.util.Objects;
 import java.util.UUID;
 
 import javax.persistence.Column;
@@ -13,6 +14,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import com.fabdev.testjpaummuitos.enums.TypeAdress;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "tb_adress")
@@ -32,20 +34,20 @@ public class Adress implements Serializable {
 	
 	private Integer typeAdress;
 	
+	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name = "customer_id")
-	private Customer customer;
+	private Customer customerId;
 	
 	public Adress() {
 	}
 
-	public Adress(UUID id, String public_place, String neighborhood, String city, TypeAdress typeAdress, Customer customer) {
-		this.id = id;
+	public Adress(String public_place, String neighborhood, String city, TypeAdress typeAdress, Customer customerId) {
 		this.public_place = public_place;
 		this.neighborhood = neighborhood;
 		this.city = city;
 		setTypeAdress(typeAdress);
-		this.customer = customer;
+		this.customerId = customerId;
 	}
 
 	public UUID getId() {
@@ -90,11 +92,36 @@ public class Adress implements Serializable {
 		}		
 	}
 
-	public Customer getCustomer() {
-		return customer;
+	public Customer getCustomerId() {
+		return customerId;
 	}
 
-	public void setCustomer(Customer customer) {
-		this.customer = customer;
+	public void setCustomerId(Customer customerId) {
+		this.customerId = customerId;
 	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(id);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Adress other = (Adress) obj;
+		return Objects.equals(id, other.id);
+	}
+
+	@Override
+	public String toString() {
+		return "Adress [id=" + id + ", public_place=" + public_place + ", neighborhood=" + neighborhood + ", city="
+				+ city + ", typeAdress=" + typeAdress + ", customer=" + customerId + "]";
+	}
+	
+	
 }
