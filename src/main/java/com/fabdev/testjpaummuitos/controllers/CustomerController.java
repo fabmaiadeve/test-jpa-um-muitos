@@ -1,5 +1,6 @@
 package com.fabdev.testjpaummuitos.controllers;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -39,7 +40,12 @@ public class CustomerController {
 		return ResponseEntity.status(HttpStatus.CREATED).body(customerService.save(customer));
 	}
 	
-	@GetMapping("/id")
+	@GetMapping
+	public ResponseEntity<List<Customer>> listAllCustomers() {
+		return ResponseEntity.status(HttpStatus.OK).body(customerService.listAll());
+	}
+	
+	@GetMapping("/{id}")
 	public ResponseEntity<Object> getCustomerById(@PathVariable(value = "id") UUID id) {
 		
 		Optional<Customer> customerOptional = customerService.findById(id);
